@@ -7,7 +7,7 @@ public class Modelo {
 
     String image;
     //contructor
-    public Model(){}
+    public Modelo(){}
 
     //getter and setters
 
