@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ImageView;
 
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -51,18 +52,19 @@ public class NavActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-//        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-//        navigationView.setNavigationItemSelectedListener(this);
+       // NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
         View headerView = navigationView.getHeaderView(0);
         TextView navUsername = (TextView) headerView.findViewById(R.id.textviewname);
         navUsername.setText(user.getDisplayName());
         View headerView1 = navigationView.getHeaderView(0);
         TextView navEmail = (TextView) headerView1.findViewById(R.id.textViewemail);
         navEmail.setText(user.getEmail());
-        ImageView navPhoto = (ImageView) headerView1.findViewById(R.id.imageView);
-        navPhoto.setImageURI(user.getPhotoUrl());
+//        ImageView navPhoto = (ImageView) headerView1.findViewById(R.id.imageView);
+//        navPhoto.setImageURI(user.getPhotoUrl().normalizeScheme());
 
 
 
@@ -119,10 +121,6 @@ public class NavActivity extends AppCompatActivity
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
 
         }
 
