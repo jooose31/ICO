@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1003256120418",
+    "firebase_url": "https://icardoffe.firebaseio.com",
+    "project_id": "icardoffe",
+    "storage_bucket": "icardoffe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1003256120418:android:2a4888e0ab483c31",
+        "android_client_info": {
+          "package_name": "jash.ICO"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1003256120418-pvoa7f9sdinp6kn3kg8jh6dtochb6318.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8PoLFDLWRHC708RfOopFjSF1eqim8B8E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
