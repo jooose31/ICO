@@ -19,16 +19,19 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class addActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private FirebaseAuth mAuth;
     private Toolbar add;
+    private DatabaseReference mDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        //aqui el add,
-       // add = (Toolbar) MenuView.ItemView(R.id.nav_add);
+
 
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
