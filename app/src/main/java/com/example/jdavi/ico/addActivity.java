@@ -3,34 +3,32 @@ package com.example.jdavi.ico;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.ImageView;
 
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
 
-public class NavActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class addActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private FirebaseAuth mAuth;
-    private Button add;
+    private Toolbar add;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //aqui el add,
+       // add = (Toolbar) MenuView.ItemView(R.id.nav_add);
 
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -54,7 +52,7 @@ public class NavActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-       // NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        // NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -71,13 +69,9 @@ public class NavActivity extends AppCompatActivity
 
 
 
-
-
     }
 
 
-
-    @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -103,13 +97,8 @@ public class NavActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            add = (Button) findViewById(R.id.action_settings);
-            add.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(NavActivity.this, addActivity.class));
-                }
-            });
+
+
             return false;
 
 
@@ -137,7 +126,9 @@ public class NavActivity extends AppCompatActivity
 
         } else if(id == R.id.nav_add){
 
-            return false;
+            startActivity(new Intent(addActivity.this,NavActivity.class));
+
+            return true;
         }else{return true;}
 
 
@@ -145,8 +136,5 @@ public class NavActivity extends AppCompatActivity
 //        drawer.closeDrawer(GravityCompat.START);
 
     }
-
-
-
 
 }
