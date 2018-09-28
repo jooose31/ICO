@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,19 +21,30 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ImageView;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class NavActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private FirebaseAuth mAuth;
     private Button add;
+    RecyclerView mRecyclerView;
+    FirebaseDatabase mfirebaseDatabase;
+    DatabaseReference mRef;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
 
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -54,9 +68,9 @@ public class NavActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-       // NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
 
+        //nombre y correo en nav
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View headerView = navigationView.getHeaderView(0);
@@ -65,17 +79,47 @@ public class NavActivity extends AppCompatActivity
         View headerView1 = navigationView.getHeaderView(0);
         TextView navEmail = (TextView) headerView1.findViewById(R.id.textViewemail);
         navEmail.setText(user.getEmail());
-//        ImageView navPhoto = (ImageView) headerView1.findViewById(R.id.imageView);
-//        navPhoto.setImageURI(user.getPhotoUrl().normalizeScheme());
+        //fin nombre y correo
 
 
+        //action bar
+        ActionBar actionBar = getSupportActionBar();
+        //titulo
+        actionBar.setTitle("Menu");
+        //recycler view
+        mRecyclerView = findViewById(R.id.recyclerView);
+        mRecyclerView.setHasFixedSize(true);
 
+        //cambiar el linear layout
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        //consulta a firebase
+        mfirebaseDatabase = FirebaseDatabase.getInstance();
+        mRef = mfirebaseDatabase.getReference("tarjetas");
 
 
     }
 
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseRecyclerAdapter<Model,ViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Model, ViewHolder>(
+                Model.class,
+                R.layout.row,
+                ViewHolder.class,
+                mRef
+        ) {
+            @Override
+            protected void populateViewHolder(ViewHolder viewHolder, Model model, int position) {
+
+                viewHolder.setDetails(getApplicationContext(),model.getTarjeta(),model.getImage());
+
+            }
+        };
+
+        mRecyclerView.setAdapter(firebaseRecyclerAdapter);
+    }
 
     @Override
     public void onBackPressed() {
@@ -107,7 +151,7 @@ public class NavActivity extends AppCompatActivity
             add.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(NavActivity.this, addActivity.class));
+                   // startActivity(new Intent(NavActivity.this, addActivity.class));
                 }
             });
             return false;

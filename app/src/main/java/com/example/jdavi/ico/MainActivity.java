@@ -25,9 +25,16 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.DataSnapshot;
+
+
 
 
 import java.net.Authenticator;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "GoogleActivity" ;
@@ -36,17 +43,32 @@ public class MainActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 1;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private DatabaseReference mRDatabase;
+
+    //private DatabaseReference nodo = mDatabase.child("usuarios");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mRDatabase = FirebaseDatabase.getInstance().getReference("usuarios");
+
+
         mGooglebtn = (SignInButton) findViewById(R.id.googlebtn);
+
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if(firebaseAuth.getCurrentUser()!= null){
-                    startActivity(new Intent(MainActivity.this, addActivity.class));
+                    FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                    String uid = currentFirebaseUser.getUid();
+                    String email = currentFirebaseUser.getEmail();
+
+                    Map<String,String> map = new HashMap<>();
+                    map.put(uid,email);
+
+                    startActivity(new Intent(MainActivity.this, NavActivity.class));
                 }
             }
         };

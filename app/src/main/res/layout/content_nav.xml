@@ -8,4 +8,6 @@
     tools:context=".NavActivity"
     tools:showIn="@layout/app_bar_nav">
 
+
+
 </android.support.constraint.ConstraintLayout>
